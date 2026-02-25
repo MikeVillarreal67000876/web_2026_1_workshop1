@@ -27,4 +27,4 @@ class Logica:
 
     def bi_implicacion(self, a: bool, b: bool) -> bool:
         # a ↔ b es verdadero cuando ambos son iguales
-        return a == 0
+        return a == b
