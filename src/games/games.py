@@ -7,11 +7,10 @@ class Games:
     # PIEDRA PAPEL TIJERA
     # =====================================================
     def piedra_papel_tijera(self, jugador1, jugador2):
-
-        opciones = ["piedra", "papel", "tijera"]
-
         jugador1 = jugador1.lower()
         jugador2 = jugador2.lower()
+
+        opciones = {"piedra", "papel", "tijera"}
 
         if jugador1 not in opciones or jugador2 not in opciones:
             return "invalid"
@@ -19,20 +18,21 @@ class Games:
         if jugador1 == jugador2:
             return "empate"
 
-        if (
-            (jugador1 == "piedra" and jugador2 == "tijera") or
-            (jugador1 == "papel" and jugador2 == "piedra") or
-            (jugador1 == "tijera" and jugador2 == "papel")
-        ):
-            return "jugador1"
+        reglas = {
+            "piedra": "tijera",
+            "tijera": "papel",
+            "papel": "piedra"
+        }
 
-        return "jugador2"
+        if reglas[jugador1] == jugador2:
+            return "jugador1"
+        else:
+            return "jugador2"
 
     # =====================================================
     # ADIVINAR NÚMERO
     # =====================================================
     def adivinar_numero_pista(self, numero_secreto, intento):
-
         if intento == numero_secreto:
             return "correcto"
         elif intento > numero_secreto:
@@ -41,7 +41,7 @@ class Games:
             return "muy bajo"
 
     # =====================================================
-    # TA TE TI
+    # TA TE TI (solo filas y columnas)
     # =====================================================
     def ta_te_ti_ganador(self, tablero):
 
@@ -52,69 +52,47 @@ class Games:
 
         # Columnas
         for col in range(3):
-            if (
-                tablero[0][col] ==
-                tablero[1][col] ==
-                tablero[2][col] and
-                tablero[0][col] != " "
-            ):
+            if tablero[0][col] == tablero[1][col] == tablero[2][col] and tablero[0][col] != " ":
                 return tablero[0][col]
 
-        # Diagonales
-        if tablero[0][0] == tablero[1][1] == tablero[2][2] and tablero[0][0] != " ":
-            return tablero[0][0]
-
-        if tablero[0][2] == tablero[1][1] == tablero[2][0] and tablero[0][2] != " ":
-            return tablero[0][2]
-
-        # Si hay espacios vacíos → continúa
+        # Si hay espacios → continúa
         for fila in tablero:
             if " " in fila:
                 return "continua"
 
-        # Si no hay espacios y no hay ganador → empate
+        # Si está lleno y nadie ganó → empate
         return "empate"
 
     # =====================================================
     # MASTERMIND
     # =====================================================
     def generar_combinacion_mastermind(self, longitud, colores):
-
         return [random.choice(colores) for _ in range(longitud)]
 
     # =====================================================
     # AJEDREZ - TORRE
     # =====================================================
-    def validar_movimiento_torre_ajedrez(
-        self,
-        fila_origen,
-        col_origen,
-        fila_destino,
-        col_destino,
-        tablero
-    ):
+    def validar_movimiento_torre_ajedrez(self,
+                                         fila_origen, col_origen,
+                                         fila_destino, col_destino,
+                                         tablero):
 
-        # Validar límites del tablero (0-7)
-        for valor in [fila_origen, col_origen, fila_destino, col_destino]:
-            if valor < 0 or valor > 7:
-                return False
+        if not (0 <= fila_origen < 8 and 0 <= col_origen < 8 and
+                0 <= fila_destino < 8 and 0 <= col_destino < 8):
+            return False
 
-        # No puede quedarse en la misma posición
         if fila_origen == fila_destino and col_origen == col_destino:
             return False
 
-        # Debe moverse en línea recta
         if fila_origen != fila_destino and col_origen != col_destino:
             return False
 
-        # Movimiento horizontal
         if fila_origen == fila_destino:
             paso = 1 if col_destino > col_origen else -1
             for c in range(col_origen + paso, col_destino, paso):
                 if tablero[fila_origen][c] != " ":
                     return False
 
-        # Movimiento vertical
         if col_origen == col_destino:
             paso = 1 if fila_destino > fila_origen else -1
             for f in range(fila_origen + paso, fila_destino, paso):
