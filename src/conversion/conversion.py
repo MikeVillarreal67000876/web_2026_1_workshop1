@@ -49,7 +49,7 @@ class Conversion:
     def romano_a_decimal(self, romano: str) -> int:
         valores = {
             "I": 1, "V": 5, "X": 10,
-            "L": 60, "C": 100,
+            "L": 50, "C": 100,
             "D": 500, "M": 1000
         }
 
