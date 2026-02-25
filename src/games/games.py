@@ -1,85 +1,121 @@
+import random
+
+
 class Games:
+
+    # =====================================================
+    # PIEDRA PAPEL TIJERA
+    # =====================================================
     def piedra_papel_tijera(self, jugador1, jugador2):
-        """
-        Determina el ganador del juego piedra, papel o tijera.
-        
-        Args:
-            jugador1 (str): Elección del jugador 1 ("piedra", "papel", "tijera")
-            jugador2 (str): Elección del jugador 2 ("piedra", "papel", "tijera")
-            
-        Returns:
-            str: "jugador1", "jugador2" o "empate"
-            
-        Reglas:
-            - Piedra vence a tijera
-            - Tijera vence a papel
-            - Papel vence a piedra
-        """
-        pass
-    
+
+        if jugador1 == jugador2:
+            return "empate"
+
+        if (
+            (jugador1 == "piedra" and jugador2 == "tijera") or
+            (jugador1 == "tijera" and jugador2 == "papel") or
+            (jugador1 == "papel" and jugador2 == "piedra")
+        ):
+            return "jugador1"
+
+        return "jugador2"
+
+    # =====================================================
+    # ADIVINAR NÚMERO
+    # =====================================================
     def adivinar_numero_pista(self, numero_secreto, intento):
-        """
-        Proporciona pistas para un juego de adivinanza de números.
-        
-        Args:
-            numero_secreto (int): El número que se debe adivinar
-            intento (int): El número propuesto por el jugador
-            
-        Returns:
-            str: "correcto", "muy alto" o "muy bajo"
-        """
-        pass
-    
+
+        if intento == numero_secreto:
+            return "correcto"
+        elif intento < numero_secreto:
+            return "mayor"
+        else:
+            return "menor"
+
+    # =====================================================
+    # TA TE TI
+    # =====================================================
     def ta_te_ti_ganador(self, tablero):
-        """
-        Verifica si hay un ganador en un tablero de tic-tac-toe.
-        
-        Args:
-            tablero (list): Matriz 3x3 con valores "X", "O" o " " (espacio vacío)
-            
-        Returns:
-            str: "X", "O", "empate" o "continua"
-            
-        Ejemplo:
-            [["X", "X", "X"],
-             ["O", "O", " "],
-             [" ", " ", " "]] -> "X"
-        """
-        pass
-    
-    def generar_combinacion_mastermind(self, longitud, colores_disponibles):
-        """
-        Genera una combinación aleatoria para el juego Mastermind.
-        
-        Args:
-            longitud (int): Número de posiciones en la combinación
-            colores_disponibles (list): Lista de colores disponibles
-            
-        Returns:
-            list: Combinación de colores de la longitud especificada
-            
-        Ejemplo:
-            generar_combinacion_mastermind(4, ["rojo", "azul", "verde"]) 
-            -> ["rojo", "azul", "rojo", "verde"]
-        """
-        pass
-    
-    def validar_movimiento_torre_ajedrez(self, desde_fila, desde_col, hasta_fila, hasta_col, tablero):
-        """
-        Valida si un movimiento de torre en ajedrez es legal.
-        
-        Args:
-            desde_fila (int): Fila inicial (0-7)
-            desde_col (int): Columna inicial (0-7)
-            hasta_fila (int): Fila destino (0-7)
-            hasta_col (int): Columna destino (0-7)
-            tablero (list): Matriz 8x8 representando el tablero
-            
-        Returns:
-            bool: True si el movimiento es válido, False si no
-            
-        Reglas:
-            - La torre se mueve horizontal o verticalmente
-            - No puede saltar sobre otras piezas
-        """
-        pass
+
+        # Filas
+        for fila in tablero:
+            if fila[0] == fila[1] == fila[2] and fila[0] != " ":
+                return fila[0]
+
+        # Columnas
+        for col in range(3):
+            if (
+                tablero[0][col] ==
+                tablero[1][col] ==
+                tablero[2][col] and
+                tablero[0][col] != " "
+            ):
+                return tablero[0][col]
+
+        # Diagonal principal
+        if (
+            tablero[0][0] ==
+            tablero[1][1] ==
+            tablero[2][2] and
+            tablero[0][0] != " "
+        ):
+            return tablero[0][0]
+
+        # Diagonal secundaria
+        if (
+            tablero[0][2] ==
+            tablero[1][1] ==
+            tablero[2][0] and
+            tablero[0][2] != " "
+        ):
+            return tablero[0][2]
+
+        return None
+
+    # =====================================================
+    # MASTERMIND
+    # =====================================================
+    def generar_combinacion_mastermind(self, longitud, colores):
+
+        combinacion = []
+
+        for _ in range(longitud):
+            combinacion.append(random.choice(colores))
+
+        return combinacion
+
+    # =====================================================
+    # AJEDREZ - TORRE
+    # =====================================================
+    def validar_movimiento_torre_ajedrez(
+        self,
+        fila_origen,
+        col_origen,
+        fila_destino,
+        col_destino,
+        tablero
+    ):
+
+        # Debe moverse en línea recta
+        if fila_origen != fila_destino and col_origen != col_destino:
+            return False
+
+        # Movimiento horizontal
+        if fila_origen == fila_destino:
+
+            paso = 1 if col_destino > col_origen else -1
+
+            for c in range(col_origen + paso, col_destino, paso):
+                if tablero[fila_origen][c] != " ":
+                    return False
+
+        # Movimiento vertical
+        if col_origen == col_destino:
+
+            paso = 1 if fila_destino > fila_origen else -1
+
+            for f in range(fila_origen + paso, fila_destino, paso):
+                if tablero[f][col_origen] != " ":
+                    return False
+
+        return True
