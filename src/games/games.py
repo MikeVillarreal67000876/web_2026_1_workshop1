@@ -8,8 +8,13 @@ class Games:
     # =====================================================
     def piedra_papel_tijera(self, jugador1, jugador2):
 
+        opciones = ["piedra", "papel", "tijera"]
+
         jugador1 = jugador1.lower()
         jugador2 = jugador2.lower()
+
+        if jugador1 not in opciones or jugador2 not in opciones:
+            return "invalid"
 
         if jugador1 == jugador2:
             return "empate"
@@ -55,29 +60,19 @@ class Games:
             ):
                 return tablero[0][col]
 
-        # Diagonal principal
-        if (
-            tablero[0][0] ==
-            tablero[1][1] ==
-            tablero[2][2] and
-            tablero[0][0] != " "
-        ):
+        # Diagonales
+        if tablero[0][0] == tablero[1][1] == tablero[2][2] and tablero[0][0] != " ":
             return tablero[0][0]
 
-        # Diagonal secundaria
-        if (
-            tablero[0][2] ==
-            tablero[1][1] ==
-            tablero[2][0] and
-            tablero[0][2] != " "
-        ):
+        if tablero[0][2] == tablero[1][1] == tablero[2][0] and tablero[0][2] != " ":
             return tablero[0][2]
 
-        # Verificar empate (tablero lleno)
+        # Si hay espacios vacíos → continúa
         for fila in tablero:
             if " " in fila:
-                return None
+                return "continua"
 
+        # Si no hay espacios y no hay ganador → empate
         return "empate"
 
     # =====================================================
@@ -98,6 +93,11 @@ class Games:
         col_destino,
         tablero
     ):
+
+        # Validar límites del tablero (0-7)
+        for valor in [fila_origen, col_origen, fila_destino, col_destino]:
+            if valor < 0 or valor > 7:
+                return False
 
         # No puede quedarse en la misma posición
         if fila_origen == fila_destino and col_origen == col_destino:
