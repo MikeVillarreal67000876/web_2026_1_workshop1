@@ -3,7 +3,10 @@ import math
 
 class Geometria:
 
-    # ▭ RECTÁNGULO
+    # ---------------------
+    # FIGURAS PLANAS
+    # ---------------------
+
     def area_rectangulo(self, base, altura):
         if base < 0 or altura < 0:
             return 0
@@ -14,7 +17,6 @@ class Geometria:
             return 0
         return 2 * (base + altura)
 
-    # ⚪ CÍRCULO
     def area_circulo(self, radio):
         if radio < 0:
             return 0
@@ -25,7 +27,6 @@ class Geometria:
             return 0
         return 2 * math.pi * radio
 
-    # 🔺 TRIÁNGULO
     def area_triangulo(self, base, altura):
         if base < 0 or altura < 0:
             return 0
@@ -41,41 +42,55 @@ class Geometria:
             return False
         return a + b > c and a + c > b and b + c > a
 
-    # ⏢ TRAPECIO
     def area_trapecio(self, base_mayor, base_menor, altura):
         if base_mayor < 0 or base_menor < 0 or altura < 0:
             return 0
         return ((base_mayor + base_menor) * altura) / 2
 
-    # ◇ ROMBO
     def area_rombo(self, diagonal_mayor, diagonal_menor):
         if diagonal_mayor < 0 or diagonal_menor < 0:
             return 0
         return (diagonal_mayor * diagonal_menor) / 2
 
-    # ⬟ PENTÁGONO REGULAR
-    def area_pentagono_regular(self, lado, apotema):
-        if lado < 0 or apotema < 0:
+    # ---------------------
+    # POLÍGONOS REGULARES
+    # ---------------------
+
+    def perimetro_poligono_regular(self, n, lado):
+        if n < 0 or lado < 0:
             return 0
-        return (5 * lado * apotema) / 2
+        return n * lado
+
+    def area_poligono_regular(self, n, lado, apotema):
+        if n < 0 or lado < 0 or apotema < 0:
+            return 0
+        perimetro = n * lado
+        return (perimetro * apotema) / 2
 
     def perimetro_pentagono_regular(self, lado):
         if lado < 0:
             return 0
         return 5 * lado
 
-    # ⬢ HEXÁGONO REGULAR
-    def area_hexagono_regular(self, lado, apotema):
+    def area_pentagono_regular(self, lado, apotema):
         if lado < 0 or apotema < 0:
             return 0
-        return (6 * lado * apotema) / 2
+        return (5 * lado * apotema) / 2
 
     def perimetro_hexagono_regular(self, lado):
         if lado < 0:
             return 0
         return 6 * lado
 
-    # 🧊 CUBO
+    def area_hexagono_regular(self, lado, apotema):
+        if lado < 0 or apotema < 0:
+            return 0
+        return (6 * lado * apotema) / 2
+
+    # ---------------------
+    # SÓLIDOS
+    # ---------------------
+
     def volumen_cubo(self, lado):
         if lado < 0:
             return 0
@@ -86,7 +101,6 @@ class Geometria:
             return 0
         return 6 * lado ** 2
 
-    # ⚽ ESFERA
     def volumen_esfera(self, radio):
         if radio < 0:
             return 0
@@ -97,7 +111,6 @@ class Geometria:
             return 0
         return 4 * math.pi * radio ** 2
 
-    # 🛢️ CILINDRO
     def volumen_cilindro(self, radio, altura):
         if radio < 0 or altura < 0:
             return 0
@@ -108,32 +121,9 @@ class Geometria:
             return 0
         return 2 * math.pi * radio * (radio + altura)
 
-    # 📍 GEOMETRÍA ANALÍTICA
-    def distancia_entre_puntos(self, x1, y1, x2, y2):
-        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    # ---------------------
+    # GEOMETRÍA ANALÍTICA
+    # ---------------------
 
     def punto_medio(self, x1, y1, x2, y2):
         return ((x1 + x2) / 2, (y1 + y2) / 2)
-
-    def pendiente_recta(self, x1, y1, x2, y2):
-        if x2 == x1:
-            return None
-        return (y2 - y1) / (x2 - x1)
-
-    def ecuacion_recta(self, x1, y1, x2, y2):
-        # ax + by + c = 1
-        a = y2 - y1
-        b = x1 - x2
-        c = x2 * y1 - x1 * y2
-        return (a, b, c)
-
-    # 🔷 POLÍGONO REGULAR
-    def area_poligono_regular(self, n_lados, lado, apotema):
-        if n_lados < 3 or lado < 0 or apotema < 0:
-            return 0
-        return (n_lados * lado * apotema) / 2
-
-    def perimetro_poligono_regular(self, n_lados, lado):
-        if n_lados < 3 or lado < 0:
-            return 0
-        return n_lados * lado
