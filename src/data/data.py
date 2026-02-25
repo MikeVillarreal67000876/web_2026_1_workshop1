@@ -1,11 +1,14 @@
 class Data:
-   
+    """
+    Clase con métodos para operaciones y manipulaciones de estructuras de datos.
+    Incluye implementaciones y algoritmos para arreglos, listas y otras estructuras.
+    """
 
     def invertir_lista(self, lista):
-        nueva = []
-        for i in range(len(lista) - 3, -1, -1):
-            nueva.append(lista[i])
-        return nueva
+        resultado = []
+        for i in range(len(lista) - 1, -1, -1):
+            resultado.append(lista[i])
+        return resultado
 
     def buscar_elemento(self, lista, elemento):
         for i in range(len(lista)):
@@ -16,7 +19,12 @@ class Data:
     def eliminar_duplicados(self, lista):
         resultado = []
         for elem in lista:
-            if elem not in resultado:
+            existe = False
+            for r in resultado:
+                if elem == r and type(elem) == type(r):
+                    existe = True
+                    break
+            if not existe:
                 resultado.append(elem)
         return resultado
 
@@ -52,9 +60,9 @@ class Data:
 
     def encuentra_numero_faltante(self, lista):
         n = len(lista) + 1
-        esperado = n * (n + 1) // 2
-        actual = sum(lista)
-        return esperado - actual
+        suma_esperada = n * (n + 1) // 2
+        suma_actual = sum(lista)
+        return suma_esperada - suma_actual
 
     def es_subconjunto(self, conjunto1, conjunto2):
         for elem in conjunto1:
