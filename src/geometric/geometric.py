@@ -3,9 +3,9 @@ import math
 
 class Geometria:
 
-    # ---------------------
+    # =====================================================
     # FIGURAS PLANAS
-    # ---------------------
+    # =====================================================
 
     def area_rectangulo(self, base, altura):
         if base < 0 or altura < 0:
@@ -52,9 +52,9 @@ class Geometria:
             return 0
         return (diagonal_mayor * diagonal_menor) / 2
 
-    # ---------------------
+    # =====================================================
     # POLÍGONOS REGULARES
-    # ---------------------
+    # =====================================================
 
     def perimetro_poligono_regular(self, n, lado):
         if n < 0 or lado < 0:
@@ -64,8 +64,7 @@ class Geometria:
     def area_poligono_regular(self, n, lado, apotema):
         if n < 0 or lado < 0 or apotema < 0:
             return 0
-        perimetro = n * lado
-        return (perimetro * apotema) / 2
+        return (n * lado * apotema) / 2
 
     def perimetro_pentagono_regular(self, lado):
         if lado < 0:
@@ -87,9 +86,9 @@ class Geometria:
             return 0
         return (6 * lado * apotema) / 2
 
-    # ---------------------
+    # =====================================================
     # SÓLIDOS
-    # ---------------------
+    # =====================================================
 
     def volumen_cubo(self, lado):
         if lado < 0:
@@ -121,9 +120,23 @@ class Geometria:
             return 0
         return 2 * math.pi * radio * (radio + altura)
 
-    # ---------------------
+    # =====================================================
     # GEOMETRÍA ANALÍTICA
-    # ---------------------
+    # =====================================================
 
     def punto_medio(self, x1, y1, x2, y2):
         return ((x1 + x2) / 2, (y1 + y2) / 2)
+
+    def distancia_entre_puntos(self, x1, y1, x2, y2):
+        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+    def pendiente_recta(self, x1, y1, x2, y2):
+        if x2 - x1 == 0:
+            return None
+        return (y2 - y1) / (x2 - x1)
+
+    def ecuacion_recta(self, x1, y1, x2, y2):
+        A = y2 - y1
+        B = -(x2 - x1)
+        C = (x2 - x1) * y1 - (y2 - y1) * x1
+        return (A, B, C)
