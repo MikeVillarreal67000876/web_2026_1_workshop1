@@ -8,13 +8,16 @@ class Games:
     # =====================================================
     def piedra_papel_tijera(self, jugador1, jugador2):
 
+        jugador1 = jugador1.lower()
+        jugador2 = jugador2.lower()
+
         if jugador1 == jugador2:
             return "empate"
 
         if (
             (jugador1 == "piedra" and jugador2 == "tijera") or
-            (jugador1 == "tijera" and jugador2 == "papel") or
-            (jugador1 == "papel" and jugador2 == "piedra")
+            (jugador1 == "papel" and jugador2 == "piedra") or
+            (jugador1 == "tijera" and jugador2 == "papel")
         ):
             return "jugador1"
 
@@ -27,10 +30,10 @@ class Games:
 
         if intento == numero_secreto:
             return "correcto"
-        elif intento < numero_secreto:
-            return "mayor"
+        elif intento > numero_secreto:
+            return "muy alto"
         else:
-            return "menor"
+            return "muy bajo"
 
     # =====================================================
     # TA TE TI
@@ -70,19 +73,19 @@ class Games:
         ):
             return tablero[0][2]
 
-        return None
+        # Verificar empate (tablero lleno)
+        for fila in tablero:
+            if " " in fila:
+                return None
+
+        return "empate"
 
     # =====================================================
     # MASTERMIND
     # =====================================================
     def generar_combinacion_mastermind(self, longitud, colores):
 
-        combinacion = []
-
-        for _ in range(longitud):
-            combinacion.append(random.choice(colores))
-
-        return combinacion
+        return [random.choice(colores) for _ in range(longitud)]
 
     # =====================================================
     # AJEDREZ - TORRE
@@ -96,24 +99,24 @@ class Games:
         tablero
     ):
 
+        # No puede quedarse en la misma posición
+        if fila_origen == fila_destino and col_origen == col_destino:
+            return False
+
         # Debe moverse en línea recta
         if fila_origen != fila_destino and col_origen != col_destino:
             return False
 
         # Movimiento horizontal
         if fila_origen == fila_destino:
-
             paso = 1 if col_destino > col_origen else -1
-
             for c in range(col_origen + paso, col_destino, paso):
                 if tablero[fila_origen][c] != " ":
                     return False
 
         # Movimiento vertical
         if col_origen == col_destino:
-
             paso = 1 if fila_destino > fila_origen else -1
-
             for f in range(fila_origen + paso, fila_destino, paso):
                 if tablero[f][col_origen] != " ":
                     return False
